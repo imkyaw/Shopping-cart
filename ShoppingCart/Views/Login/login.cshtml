@@ -1,0 +1,64 @@
+﻿@model ShoppingCart.Models.User
+@using ShoppingCart.Models;
+
+@{
+    Layout = "";
+    ViewBag.Title = "Login";
+    var user = (User)ViewData["user"];
+    var err = (string)TempData["Data"];
+}
+<style>
+    body{
+        padding-top:0;
+    }
+     .l-btn{
+         margin-top:10px;
+     }
+     .input-group{
+         margin-top:10px;
+     }
+     .form-control{
+         width:100%;
+         margin:0 auto;
+     }
+</style>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<div class="card login-card card-1">
+    @*<h2 style="text-align:center">Login</h2>*@
+    @using (Html.BeginForm("Login", "Login", FormMethod.Post))
+    {
+        <div class="">
+
+            <div class="input-group col-md-12">
+                <label>Username: </label>
+                @*<input type="text" name="username"/>*@@Html.TextBoxFor(x => x.UserName, new { Name = "username", Class = "form-control col-md-12" })
+                <span class="validation text-danger">@Html.ValidationMessageFor(x => x.UserName)</span>
+
+            </div>
+            <div class="input-group col-md-12">
+                <label>Password : </label>
+                @*<input type="password" name="password" />*@@Html.PasswordFor(x => x.Password, new { Name = "password" ,Class= "form-control col-md-12" })
+                <span class="validation text-danger">@Html.ValidationMessageFor(x => x.Password)</span>
+            </div>
+
+            
+                <input type="submit" value="Login" class="btn btn-block l-btn"/>
+           
+            
+                <span class="validation text-danger">@err</span>
+            
+        </div>
+
+    }
+</div>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@Scripts.Render("~/bundles/jqueryval")
+@*@RenderSection("scripts", required: false)*@

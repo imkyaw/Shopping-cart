@@ -1,0 +1,39 @@
+﻿@using ShoppingCart.Models
+@using ShoppingCart.util
+@{
+    ViewBag.Title = "MyPurchase";
+    var products = ViewData["list"] as List<Purchase>;
+    var addlist = ViewData["addlist"] as string;
+    var count = (int)ViewData["count"];
+}
+
+<h2>MyPurchase</h2>
+<a href="~/Product/Index?productId=@addlist&count=@count">Gallery</a>
+@foreach (var _product in products)
+{
+    var date = TimeStamp.dateFromTimestamp(_product.Date);
+    var list = EnumerableList.GetSelectListItems(_product.Code);
+    <div>
+
+        <div class="col-md-12">
+            <div class="card card-1 ">
+                <img src="~/Images/@_product.Image" class="img-responsive" style="width:100%" alt="Image">
+                <h3>@_product.Name</h3>
+                @_product.Description
+            </div>
+            <div class="">
+                <p>
+                    Qty:
+                    @_product.Qty
+                </p>
+                <p>
+                    Date:
+                    @date
+                </p>
+                @Html.DropDownList("List", list)
+            </div>
+        </div>
+    </div>
+
+}
+

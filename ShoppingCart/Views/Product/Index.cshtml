@@ -1,0 +1,64 @@
+﻿@using ShoppingCart.Models
+@{
+	ViewBag.Title = "Index";
+	var products = (List<Product>)ViewData["ProductList"];
+	var add = (string)ViewData["add"];
+	var id = "";
+	if (ViewData["id"] != null)
+	{
+		id = (string)ViewData["id"];
+	}
+	else
+	{
+		id = "";
+	}
+	int increment = 1;
+	int count = (int)ViewData["count"];
+	int dmg = increment + count;
+	var s = ViewData["search"];
+	var user = (User)ViewData["user"];
+	var name = user.FirstName + " " + user.LastName;
+	var a = (int)Session["id"];
+}
+
+<link rel="stylesheet" href="styles.css">
+<a href="/Purchase/MyPurchase?userId=@a">Purchase History</a>
+<div class="container">
+	<form method="post" action="ShoppingCart">
+		<div class="">
+			<h2 class="title">Product</h2>
+			<input type="hidden" name="productId" value="@add" />
+			<button class="btn btn-success btn-sm ml-3 cart-btn" type="submit">
+				<i class="fa fa-shopping-cart"></i> Cart
+				<span class="badge badge-light" id="count">@count</span>
+			</button>
+		</div>
+		@*formaction="ShoppingCart?productId=@add"*@
+	</form>
+
+	<div class="searchcol">
+	<form method="post" action="">
+		<input type="text" value="@s" name="searchString" class="search" />
+		<input type="submit" value="Search" style="margin-top:10px;" formaction="Index?productId=@add&searchString=@s" />
+	</form>
+
+	</div>
+	<form method="post">
+		<div class="" style="margin-top:10px;">
+			@foreach (var _product in products)
+			{
+				<div class="card card-1">
+
+					<img src="~/Images/@_product.ImgPath" class="img-responsive" style="width:100%" alt="Image">
+					<h4>@_product.Name</h4>
+					@_product.Description
+					<br>
+					<div><input type="submit" formaction="Index?productId=@add&id=@_product.Id&count=@dmg" value="$ @_product.Price - Add to Cart" class="addToCart" /></div>
+				</div>
+			}
+		</div>
+	</form>
+</div>
+<style>
+
+</style>
